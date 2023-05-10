@@ -1,0 +1,20 @@
+<apex:page action="{!setInputValue}" controller="EditLeaveIFrameController">
+    <apex:form >
+        <div class="leave-request-block">
+            <apex:pageBlock title="New Leave Request">
+                <apex:pageBlockSection >
+                    <apex:inputField value="{!newLeave.Name}" label="Your Name" required="true"/>
+                    <apex:inputField value="{!newLeave.Start_Date__c}" label="Start Date" required="true"/>
+                    <apex:inputField value="{!newLeave.End_Date__c}" label="End Date" required="true"/>
+                    <apex:inputField value="{!newLeave.Reason__c}" label="Reason" required="true"/>
+                    <apex:inputField value="{!newLeave.Manager_Email__c}" label="Manager Id" required="true"/>
+                    <apex:inputField value="{!newLeave.Email__c}" label="Your Id" required="true"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Submit" action="{!submitLeaveRequest}" styleClass="submit-button"/>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
+        </div>
+    </apex:form>
+
+</apex:page>
