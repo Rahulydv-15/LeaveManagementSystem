@@ -1,0 +1,64 @@
+<apex:page controller="LeaveRequestController">
+    <apex:form >
+        <div class="leave-request-block">
+            <apex:pageBlock title="New Leave Request">
+                <apex:pageBlockSection >
+                    <apex:inputField value="{!newLeave.Name}" label="Your Name" required="true"/>
+                    <apex:inputField value="{!newLeave.Start_Date__c}" label="Start Date" required="true"/>
+                    <apex:inputField value="{!newLeave.End_Date__c}" label="End Date" required="true"/>
+                    <apex:inputField value="{!newLeave.Reason__c}" label="Reason" required="true"/>
+                    <apex:inputField value="{!newLeave.Manager_Email__c}" label="Manager Id" required="true"/>
+                    <apex:inputField value="{!newLeave.Email__c}" label="Your Id" required="true"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Submit" action="{!submitLeaveRequest}" styleClass="submit-button"/>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
+        </div>
+    </apex:form>
+    <apex:form >
+        <apex:pageBlock title="See Your Leaves">
+            <apex:pageBlockSection >
+                <apex:inputText value="{!Email}" label="Enter Your Email"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Show Leaves" action="{!showLeave}" styleClass="submit-button" reRender="leaveTable"/>
+            </apex:pageBlockButtons>
+            
+            <apex:outputPanel id="leaveTable">
+                <apex:pageBlockSection rendered="{!displayLeaves}">
+                    <apex:pageBlockTable value="{!leaves}" var="leave">
+                        <apex:column value="{!leave.Name}"/>
+                        <apex:column value="{!leave.Start_Date__c}"/>
+                        <apex:column value="{!leave.End_Date__c}"/>
+                        <apex:column value="{!leave.Reason__c}"/>
+                        <apex:column value="{!leave.Manager_Email__c}"/>
+                        <apex:column value="{!leave.Status__c}"/>
+                        <apex:column > 
+                            <apex:commandButton value="Edit" action="{!goToVsp2}" rerender="none" rendered="{!leave.Status__c == 'Pending'}">
+    <apex:param name="selectedLeaveId1" value="{!leave.Id}" assignTo="{!selectedLeaveId}"/>
+</apex:commandButton> 
+
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+    
+    <style>
+        .leave-request-block {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f8f8f8;
+        }
+        
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</apex:page>
