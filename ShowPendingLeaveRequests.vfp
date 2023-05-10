@@ -1,0 +1,40 @@
+<apex:page controller="PendingRequestController">
+    <apex:pageBlock title="Pending Leave Requests">
+        <apex:form >
+            <apex:pageMessages />
+            <apex:pageBlockSection >
+                <apex:inputText value="{!managerEmail}" label="Enter Your Email"/>
+                <apex:commandButton value="Send OTP" action="{!generateOTP}" reRender="otpboxPanel" />
+                <apex:outputPanel id="otpboxPanel">
+                    <apex:outputPanel rendered="{!showOtpBox}">
+                        <apex:outputLabel value="Enter OTP" for="enteredOtp"/>
+                        <apex:inputText id="enteredOtp" value="{!enteredOtp}"  />
+                        <apex:commandButton value="Validate OTP" action="{!validateOTP}" reRender="leaveRequestsTable" />
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:form>
+        
+        <apex:form >
+            <apex:outputPanel id="leaveRequestsTable">
+                <apex:pageBlockSection rendered="{!displayLeaveRequests}">
+                    <apex:pageBlockTable value="{!pendingLeaveRequests}" var="leave">
+                        <apex:column value="{!leave.Name}"/>
+                        <apex:column value="{!leave.Start_Date__c}"/>
+                        <apex:column value="{!leave.End_Date__c}"/>
+                        <apex:column value="{!leave.Reason__c}"/>
+                        <apex:column value="{!leave.Manager_Email__c}"/>
+                        <apex:column >
+                            <apex:commandButton value="Approve" action="{!approveLeave}" reRender="leaveRequestsTable">
+                                <apex:param name="leaveId" value="{!leave.Id}" assignTo="{!selectedLeaveId}"/>
+                            </apex:commandButton>
+                            <apex:commandButton value="Reject" action="{!rejectLeave}" reRender="leaveRequestsTable">
+                                <apex:param name="leaveId" value="{!leave.Id}" assignTo="{!selectedLeaveId}"/>
+                            </apex:commandButton>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>
